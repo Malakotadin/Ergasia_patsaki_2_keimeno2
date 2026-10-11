@@ -26,7 +26,8 @@ mp.dps=10000
 
 #demo_string=demo_string[:100]
 
-arithmos_bit=len(demo_string)
+#arithmos_bit=len(demo_string)
+arithmos_bit=256
 lista_kopsimatos=[]
 splicing_counter=256
 while(True):
@@ -84,15 +85,15 @@ def diavasma_string(string):
     
     
     for char in string:
-        print(type(char))
-        if type(char)==list:
-            breakpoint()# οοκκ εδω για καποιο λογο πεταει σα νορισμα μια  λιστα , η οποια περιεχει τα δεδομενα συμπιεσης και απο συμπιεσης του κειμενου , γαμω
+      #  print(type(char))
+       # if type(char)==list:
+        #    breakpoint()# οοκκ εδω για καποιο λογο πεταει σα νορισμα μια  λιστα , η οποια περιεχει τα δεδομενα συμπιεσης και απο συμπιεσης του κειμενου , γαμω
         dictionary_xarakthron_kai_pososton=string_yparhei(dictionary_xarakthron_kai_pososton,char)
         
     return dictionary_xarakthron_kai_pososton 
        
   
-print(type(demo_string))
+#print(type(demo_string))
 #exit()
 dictionary_xarakthron_kai_pososton=diavasma_string(demo_string)
 lista_monadikon_xarakthron=[]
@@ -181,7 +182,7 @@ def encoderv3(orismata):#υπαρχει τροπος να υλοποιηθηει
     end=mp.mpf(end)
     oliki_lista_pososton=olika_pososta(start,end,lista_arhikon_pososton)
     dictionary_diastimaton=apostasi_tou_kleidou(oliki_lista_pososton,lista_monadikon_xarakthron)
-    print("η λιστα ολικων ποσοστων ειναι η ",oliki_lista_pososton)
+ #   print("η λιστα ολικων ποσοστων ειναι η ",oliki_lista_pososton)
     timoula=0
     timoula=mp.mpf(timoula)
     for character in demo_string:
@@ -244,7 +245,7 @@ def decoderv3(lista_orismaton):
     end=mp.mpf(end)
     oliki_lista_pososton=olika_pososta(start,end,lista_arhikon_pososton)
     dictionary_diastimaton=apostasi_tou_kleidou(oliki_lista_pososton,lista_monadikon_xarakthron)
-    print("η λιστα ολικων ποσοστων ειναι η ",oliki_lista_pososton)
+   # print("η λιστα ολικων ποσοστων ειναι η ",oliki_lista_pososton)
     i=0
     teliko_string=[]
     kato_orio=0
@@ -252,19 +253,19 @@ def decoderv3(lista_orismaton):
     torino_kato_orio=mp.mpf(kato_orio)
     torino_ano_orio=mp.mpf(ano_orio)
     while i < arithmos_bit:
-        print(i)
+    #    print(i)
         for key,value in dictionary_diastimaton.items():
             kato_orio=value[0]
             ano_orio=value[1]
            # print((timoula >= kato_orio) and (timoula <= ano_orio))
-            print(float(kato_orio)==float(timoula))
-            print(float(ano_orio)==float(timoula))
+      #      print(float(kato_orio)==float(timoula))
+       #     print(float(ano_orio)==float(timoula))
             print("".join(teliko_string))
-            print(timoula,kato_orio)
+         #   print(timoula,kato_orio)
            # breakpoint()
-            print("xamilo orio",kato_orio)
-            print("timoula",timoula)
-            print("psilo",ano_orio)
+        #    print("xamilo orio",kato_orio)
+        #    print("timoula",timoula)
+        #    print("psilo",ano_orio)
             if (timoula >= kato_orio) and (timoula<=ano_orio):
                 
                 torino_kato_orio=kato_orio
@@ -350,18 +351,20 @@ for demo_string in lista_kopsimatos:
     lista_arhikon_pososton,listamonadikon_xarakthron=parametroi_maker(demo_string)#εδω περα σε καποια φαση παιρνει για input lista , γιατι>???
 
     lista_kopsimatos2.append([lista_arhikon_pososton,listamonadikon_xarakthron,demo_string])
-  
+breakpoint()#να διερευνησω την λιστα κοπσιματος 2 γιατι κατι ισως να μην παει καλα
 lista_epistrofis_timon=p_map(encoderv3,lista_kopsimatos2)#hη λιστα κοπσιματος εχει την λιστα αρχικων ποσοστων , την λιστα μοναδικων χαρακτηρων και το string που θελουμε να κοψουμε
 #θα μπορουσε τα συγκεκριμενα να τα βρισκει και η ιδια η encoder συναρτηση , αυτο θα επρεπε να κανω
 lista_orismaton=[]
-for i in range(lista_epistrofis_timon):
-    lista_orismaton.append(lista_epistrofis_timon[i],arithmos_bit,lista_arhikon_pososton[i])
+breakpoint()# να ελεγξω την λιστα αρχικων ποσοστων
+for i in range(0,len(lista_epistrofis_timon)):
+    lista_orismaton.append([lista_epistrofis_timon[i],arithmos_bit,lista_arhikon_pososton[i]])
 
 #breakpoint()
 print(timoula)
 #breakpoint()
 #exit()
 #final_output="".join(decoderv2(timoula,arithmos_bit,lista_arhikon_pososton))
+breakpoint()#τι εχω πριν το decoding  #μαλακια η λιστα ορισματων μου εχει μονο ενα κομματι , οπου σημαινι πωςτο tag επιστρεφει μονο ενα σκελος ? ισως αυτο φταει που ο αριθμος  bit  ειναι το μηκος του κειμενου 
 final_output="".join(p_map(decoderv3,lista_orismaton))
 breakpoint()# τελος κωδικα πριν συγγραφη , δοκιμασε να γραψεις κα τι θα γραψεις # κατι δεν κανω σιγουρα καλα στο decoding , ας διερευνησουμε
 f=open("vivlio.txt","w")
